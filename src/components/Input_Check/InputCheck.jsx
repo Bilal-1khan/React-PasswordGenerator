@@ -3,13 +3,17 @@ import React from 'react'
 const InputCheck = (
     {
         Id,
-        Label
+        Label,
+        isChecked,
+        checkInput
     }
 ) => {
   return (
     <>
     <input 
     type="checkbox" 
+    defaultChecked={isChecked}
+    onChange={()=>checkInput()}
     id={Id} 
     className='mx-3'
     />
