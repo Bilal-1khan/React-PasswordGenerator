@@ -1,11 +1,9 @@
-import { useState } from 'react'
+import { PassGen } from './components/index'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-    <h1>react password generator</h1>
+    <PassGen/>
     </>
   )
 }
