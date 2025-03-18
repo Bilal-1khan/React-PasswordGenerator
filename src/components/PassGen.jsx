@@ -18,8 +18,8 @@ const PassGen = () => {
         if (lowercase) string += 'abcdefghijklmnopqrstuvwxyz'
 
         for (let i = 1; i <= passLength; i++) {
-            const char = Math.floor((Math.random()) * (string.length + 1))
-            pass += string.at(char)
+            const char = Math.floor((Math.random()) * (string.length) + 1)
+            pass += string.charAt(char)
         }
         setPassword(pass)
       },[passLength,number,characters,uppercase,lowercase,setPassword])
