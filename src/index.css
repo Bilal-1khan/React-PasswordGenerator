@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.container{
+    @apply w-full h-screen bg-[#242424] p-4 flex justify-center items-center
+}
+
+.passwordBox{
+    @apply  bg-[#444] px-3 pt-5 pb-3 w-1/2 rounded-xl flex flex-col
+}
+.passBoxTop{
+    @apply flex justify-center gap-4
+}
+.inputPass{
+    @apply w-[80%] cursor-default p-2 border-none outline-none rounded-xl
+}
+.btn{
+    @apply px-4 py-2 hover:bg-slate-400 font-bold rounded-xl cursor-pointer 
+    capitalize text-white bg-slate-500
+}
+.passBoxBottom{
+    @apply inline-flex gap-2 flex-wrap  mt-5 mb-2 justify-center
+}
+.labels{
+ @apply text-white capitalize cursor-pointer
+}
