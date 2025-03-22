@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback, useRef} from "react";
-import { Container, InputCheck, InputRange } from "./index";
+import React, { useEffect, useState, useCallback, useRef } from "react";
+import { Container, InputCheck, InputRange, InputPass } from "./index";
 
 const PassGen = () => {
   const [passLength, setPassLength] = useState(5);
@@ -8,7 +8,29 @@ const PassGen = () => {
   const [uppercase, setUppercase] = useState(false);
   const [lowercase, setLowercase] = useState(false);
   const [password, setPassword] = useState("");
-  let passRef = useRef(null)
+  const [passStrength, setPassStrength] = useState();
+  let passRef = useRef(null);
+
+  const cssStyle = {
+    borderBottom: "5px solid transparent",
+    width: "0%",
+    transition: ".5s ease",
+  };
+  const cssStyle1 = {
+    borderBottom: "5px solid red",
+    width: "25%",
+    transition: ".5s ease",
+  };
+  const cssStyle2 = {
+    borderBottom: "5px solid yellow",
+    width: "50%",
+    transition: ".5s ease",
+  };
+  const cssStyle3 = {
+    borderBottom: "5px solid green",
+    width: "100%",
+    transition: ".5s ease",
+  };
 
   const passwordGenerator = useCallback(() => {
     let pass = "";
@@ -30,7 +52,21 @@ const PassGen = () => {
   }, [passLength, number, characters, uppercase, lowercase, passwordGenerator]);
 
   function handleRange(event) {
-    setPassLength(event.target.value);
+    const target = event.target.value;
+    setPassLength(target);
+
+    if (target <= 5) {
+      setPassStrength(cssStyle);
+    }
+    if (target == 10) {
+      setPassStrength(cssStyle1);
+    }
+    if (target == 15) {
+      setPassStrength(cssStyle2);
+    }
+    if (target == 30) {
+      setPassStrength(cssStyle3);
+    }
   }
   function handleNumber() {
     setNumber((prev) => !prev);
@@ -44,37 +80,31 @@ const PassGen = () => {
   function handleLowerCase() {
     setLowercase((prev) => !prev);
   }
-  const handleClick = () =>{
-    passRef.current?.select()
-    window.navigator.clipboard.writeText(password)
-    alert("Text copied")
-  }
+  const handleClick = () => {
+    passRef.current?.select();
+    window.navigator.clipboard.writeText(password);
+    alert("Text copied");
+  };
+
   return (
     <Container>
-      <div className="passwordBox bg-[#444] px-3 py-5 w-1/2 rounded-xl">
-        <div className="top flex justify-center gap-4">
-          <input
-            type="text"
-            placeholder="password"
-            value={password}
-            ref={passRef}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-[80%] cursor-default p-2 border-none outline-none rounded-xl"
-            readOnly
+      <div className="passwordBox">
+        <div className="passBoxTop ">
+          <InputPass
+            password={password}
+            passRef={passRef}
+            onPassMethod={setPassword}
           />
-          <button 
-          onClick={handleClick}
-          className="px-4 py-2 font-bold rounded-xl cursor-pointer capitalize text-white bg-slate-500">
+          <button onClick={handleClick} className="btn">
             copy
           </button>
         </div>
-        <div className="bottom inline-flex gap-2 flex-wrap  mt-5 mb-2 justify-center">
+        <div className="passBoxBottom">
           <InputRange
             Label={"length"}
             range={passLength}
             onRange={handleRange}
           />
-
           <InputCheck
             Label={"number"}
             Id={"number"}
@@ -100,6 +130,7 @@ const PassGen = () => {
             checkInput={handleLowerCase}
           />
         </div>
+        <div className="rounded-xl" style={passStrength}></div>
       </div>
     </Container>
   );
